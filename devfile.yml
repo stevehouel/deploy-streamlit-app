@@ -21,11 +21,11 @@ components:
       size: 16Gi
 events:
   postStart:
-    - build-and-test
+    - build-and-test-app
+    - install-cdk-dependencies
 commands:
-  - id: build-and-test
+  - id: build-and-test-app
     exec:
-      commandLine: npm install && npm run build && npm test -- --coverage
-        --watchAll=false --testResultsProcessor="jest-junit"
+      commandLine: python3 -m pip install -r requirements.txt
       workingDir: $PROJECT_SOURCE
       component: aws-runtime
