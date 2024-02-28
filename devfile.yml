@@ -1,0 +1,31 @@
+schemaVersion: 2.0.0
+metadata:
+  name: aws-universal
+  version: 1.0.1
+  displayName: AWS Universal
+  description: Stack with AWS Universal Tooling
+  tags:
+    - aws
+    - a12
+  projectType: aws
+components:
+  - name: aws-runtime
+    container:
+      image: public.ecr.aws/aws-mde/universal-image:3.0
+      mountSources: true
+      volumeMounts:
+        - name: docker-store
+          path: /var/lib/docker
+  - name: docker-store
+    volume:
+      size: 16Gi
+events:
+  postStart:
+    - build-and-test
+commands:
+  - id: build-and-test
+    exec:
+      commandLine: npm install && npm run build && npm test -- --coverage
+        --watchAll=false --testResultsProcessor="jest-junit"
+      workingDir: $PROJECT_SOURCE
+      component: aws-runtime
