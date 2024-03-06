@@ -1,0 +1,57 @@
+Name: onPushToMainDeploymentWorkflow
+SchemaVersion: "1.0"
+Triggers:
+  - Type: PUSH
+    Branches:
+      - main
+Actions:
+  BuildAndTest:
+    Identifier: aws/managed-test@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Outputs:
+      AutoDiscoverReports:
+        IncludePaths:
+          - "**/*"
+        ExcludePaths:
+          - "*/.aws/workflows/*"
+        ReportNamePrefix: AutoDiscovered
+        Enabled: true
+    Configuration:
+      Steps:
+        - Run: pip install -r requirements.txt
+        - Run: echo "No test coverage step"
+  CDKBootstrapAction:
+    Identifier: aws/cdk-bootstrap@v1
+    Compute:
+      Type: Lambda
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      Region: us-west-2
+    Environment:
+      Name: default_environment
+      Connections:
+        - Name: "653738050483"
+          Role: CodeCatalystWorkflowDevelopmentRole-awssummit-2024
+  CDKDeploy:
+    Identifier: aws/cdk-deploy@v1
+    Compute:
+      Type: EC2
+    Inputs:
+      Sources:
+        - WorkflowSource
+    DependsOn:
+      - CDKBootstrapAction
+      - BuildAndTest
+    Configuration:
+      StackName: AwsSummit2024Stack-ncnxu
+      Region: us-west-2
+      Context: '{"stack_name": "AwsSummit2024Stack-ncnxu"}'
+    Environment:
+      Name: default_environment
+      Connections:
+        - Name: "653738050483"
+          Role: CodeCatalystWorkflowDevelopmentRole-awssummit-2024
