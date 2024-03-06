@@ -1,7 +1,7 @@
 class Config:
     # Stack name
     # Change this value if you want to create a new instance of the stack
-    STACK_NAME = "Streamlit"
+    STACK_NAME = "AwsSummit2024Stack-ncnxu"
     
     # Put your own custom value here to prevent ALB to accept requests from
     # other clients that CloudFront. You can choose any random string.
