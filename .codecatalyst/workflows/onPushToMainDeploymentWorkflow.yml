@@ -39,20 +39,21 @@ Actions:
       CdkCliVersion: 2.114.1
   CDKDeploy:
     Identifier: aws/cdk-deploy@v1
-    Compute:
-      Type: EC2
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-awssummit-2024
+          Name: "653738050483"
+      Name: default_environment
     Inputs:
       Sources:
         - WorkflowSource
-    DependsOn:
-      - CDKBootstrapAction
-      - BuildAndTest
+    Compute:
+      Type: EC2
     Configuration:
       StackName: AwsSummit2024Stack-ncnxu
       Region: us-west-2
-      Context: '{"stack_name": "AwsSummit2024Stack-ncnxu"}'
-    Environment:
-      Name: default_environment
-      Connections:
-        - Name: "653738050483"
-          Role: CodeCatalystWorkflowDevelopmentRole-awssummit-2024
+      CdkCliVersion: 2.114.1
+      Context: '{"stack_name":"AwsSummit2024Stack-ncnxu"}'
+    DependsOn:
+      - CDKBootstrapAction
+      - BuildAndTest
