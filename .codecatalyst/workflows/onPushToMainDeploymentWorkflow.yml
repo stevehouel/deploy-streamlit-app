@@ -24,18 +24,19 @@ Actions:
         - Run: echo "No test coverage step"
   CDKBootstrapAction:
     Identifier: aws/cdk-bootstrap@v1
-    Compute:
-      Type: Lambda
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-awssummit-2024
+          Name: "653738050483"
+      Name: default_environment
     Inputs:
       Sources:
         - WorkflowSource
+    Compute:
+      Type: Lambda
     Configuration:
       Region: us-west-2
-    Environment:
-      Name: default_environment
-      Connections:
-        - Name: "653738050483"
-          Role: CodeCatalystWorkflowDevelopmentRole-awssummit-2024
+      CdkCliVersion: 2.114.1
   CDKDeploy:
     Identifier: aws/cdk-deploy@v1
     Compute:
