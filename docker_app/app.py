@@ -23,6 +23,7 @@ def logout():
 
 with st.sidebar:
     st.text(f"Welcome,\n{authenticator.get_username()}")
+    st.page_link("image_background_app.py", label="Image Background")
     st.button("Logout", "logout_btn", on_click=logout)
 
 # Add title on the page
