@@ -11,4 +11,4 @@ class Config:
     # When you delete a secret, you cannot create another one immediately
     # with the same name. Change this value if you destroy your stack and need
     # to recreate it with the same STACK_NAME.
-    SECRETS_MANAGER_ID = f"{STACK_NAME}ParamCognitoSecret12345"
+    SECRETS_MANAGER_ID = "AwsSummit2024Stack-ncnxuParamCognitoSecret12345"
