@@ -7,10 +7,7 @@ class Llm:
     def __init__(self):
         # Create Bedrock client
         bedrock_client = boto3.client(
-            'bedrock-runtime',
-            # If Bedrock is not activated in us-east-1 in your account, set this value
-            # accordingly
-            region_name='us-east-1',
+            'bedrock-runtime'
         )
         self.bedrock_client = bedrock_client
 
